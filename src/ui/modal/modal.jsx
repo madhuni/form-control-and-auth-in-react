@@ -11,12 +11,11 @@ const modal = (props) => {
     classes.push('modal-close');
   }
   return (
-    <React.Fragment>
-      <Backdrop show={props.show} clicked={props.clicked}/>
+    <Backdrop show={props.show} clicked={props.clicked}>
       <div className={classes.join(' ')} onClick={(event) => event.stopPropagation()}>
         {props.children}
       </div>
-    </React.Fragment>
+    </Backdrop>
   );
 };
 
