@@ -1,0 +1,60 @@
+.auth {
+  grid-column: center-start / center-end;
+  padding: 10rem 0;
+}
+
+.auth-form {
+  width: 100%;
+  max-width: 40rem;
+  margin: 0 auto;
+  /* border: .2rem solid black; */
+  border-radius: .2rem;
+  box-shadow: 0 1rem 4rem rgba(128, 128, 128, 0.3);
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.user-icon {
+  margin-bottom: 2rem;
+}
+
+.btn {
+  width: 20rem;
+  padding: 1rem;
+  font-size: 1.8rem;
+  border-radius: .2rem;
+  border: 0;
+  margin: 2rem 0;
+  outline: none;
+  background-color: #ffce73;
+  transition: all .2s ease;
+  box-shadow: 0 .3rem 1.3rem rgba(0, 0, 0, .25);
+}
+
+.btn:disabled {
+  cursor: not-allowed;
+  background: rgba(128, 128, 128, 0.32);
+}
+
+.btn:active {
+  box-shadow: none;
+  transform: scale(.95);
+  /* animation: btnanimation 1s infinite ease; */
+}
+
+@keyframes btnanimation {
+  0% {
+    transform: scale(1);
+    box-shadow: none;
+  }
+  50% {
+    transform: scale(1.05);
+    box-shadow: 0 1rem 4rem rgba(0, 0, 0, .25);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: none;
+  }
+}
