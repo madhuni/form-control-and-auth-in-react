@@ -33,7 +33,12 @@
   box-shadow: 0 .3rem 1.3rem rgba(0, 0, 0, .25);
 }
 
+.btn--switch {
+  background-color: #73c5ff;
+}
+
 .btn:disabled {
+  box-shadow: none;
   cursor: not-allowed;
   background: rgba(128, 128, 128, 0.32);
 }
@@ -57,4 +62,9 @@
     transform: scale(1);
     box-shadow: none;
   }
+}
+
+.switch-mode {
+  text-align: center;
+  padding: 7rem 0;
 }

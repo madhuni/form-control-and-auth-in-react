@@ -1,8 +1,11 @@
 import React, {Component} from 'react';
+import { connect } from 'react-redux';
 
 import './auth.css';
 import Input from '../../components/ui/input/input';
 import user from '../../assets/images/user-icon.svg';
+
+import * as actionCreators from '../../store/actions/action-creators';
 
 class Auth extends Component {
   state = {
@@ -42,7 +45,8 @@ class Auth extends Component {
         label: 'Password'
       },
     },
-    formValidated: false
+    formValidated: false,
+    isSignUp: true
   };
 
   checkFormValidity = (value, rules) => {
@@ -94,6 +98,19 @@ class Auth extends Component {
     this.setState({formControls: updatedFormControls, formValidated: isFormValid});
   }
 
+  onToggleAuthMode = () => {
+    this.setState(prevState => {
+      return {isSignUp: !this.state.isSignUp}
+    });
+  }
+
+  onSubmitHandler = (event) => {
+    event.preventDefault();
+    const email = this.state.formControls.email.value;
+    const password = this.state.formControls.password.value;
+    this.props.onAuthStart(email, password, this.state.isSignUp);
+  }
+
   render() {
     const formElementsArray = [];
 
@@ -106,7 +123,7 @@ class Auth extends Component {
 
     return (
       <div className="auth">
-        <form className="auth-form">
+        <form className="auth-form" onSubmit={this.onSubmitHandler}>
           <img src={user} alt="User Icon" width="100" height="100" className="user-icon"/>
           {formElementsArray.map(formElement => (
             <Input 
@@ -121,11 +138,29 @@ class Auth extends Component {
               isTouched={formElement.config.touched}
             />
           ))}
-          <button type="submit" disabled={!this.state.formValidated} className="btn">Sign Up</button>
+          <button type="submit" disabled={!this.state.formValidated} className="btn">
+            {this.state.isSignUp ? 'Sign UP' : 'Sign In'}
+          </button>
         </form>
+
+        <div className="switch-mode">
+          <p>Already having an account? Click below button to Sign In.</p>
+          <button className="btn btn--switch" onClick={this.onToggleAuthMode}>
+            Switch to {this.state.isSignUp ? 'Sign In' : 'Sign Up'}
+          </button>
+        </div>
+
       </div>
     );
   }
 }
 
-export default Auth;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onAuthStart: (email, password, isSignUp) => {
+      dispatch(actionCreators.auth(email, password, isSignUp)); // important we need to call the fn
+    }
+  };
+};
+
+export default connect(null, mapDispatchToProps)(Auth);
