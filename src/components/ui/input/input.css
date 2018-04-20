@@ -1,0 +1,35 @@
+.form-control {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 2rem;
+  width: 100%;
+  height: 100%;
+}
+
+.label {
+  font-size: 1.2rem;
+  margin-bottom: .5rem;
+}
+
+.input-element {
+  font-size: 1.6rem;
+  padding: 1rem;
+  outline: none;
+  transition: all .3s ease;
+  border: none;
+  border: .1rem solid rgba(128, 128, 128, 0.3);
+}
+
+.input-invalid {
+  border-bottom: .3rem solid red;
+}
+
+.input-valid {
+  border-bottom: .3rem solid green;
+}
+
+.error-msg {
+  margin-top: .5rem;
+  font-size: 1.2rem;
+  color: red;
+}
