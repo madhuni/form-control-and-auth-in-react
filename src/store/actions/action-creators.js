@@ -47,10 +47,10 @@ export const auth = (email, password, isSignUP) => {
     };
 
     /* Sending a post request for user SIGN-UP/SIGN-IN */
-    let url = 'https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=AIzaSyCeCfnFOEgD_y7Bw6EaZH9h_nEsSEKn9oE';
+    let url = 'https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=[API_KEY]';
 
     if (!isSignUP) {
-      url = 'https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key=AIzaSyCeCfnFOEgD_y7Bw6EaZH9h_nEsSEKn9oE';
+      url = 'https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key=[API_KEY]';
     }
 
     axios.post(url, data)
