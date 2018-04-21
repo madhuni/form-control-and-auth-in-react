@@ -68,3 +68,18 @@
   text-align: center;
   padding: 7rem 0;
 }
+
+.loading-msg {
+  text-align: center;
+  font-size: 2rem;
+  padding: 2rem;
+  margin-top: 3rem;
+}
+
+.auth-error-msg {
+  width: 100%;
+  text-align: center;
+  margin-bottom: 2rem;
+  font-size: 1.6rem;
+  color: red;
+}
