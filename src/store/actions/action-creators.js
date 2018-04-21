@@ -18,6 +18,20 @@ const authFail = (errData) => {
     value: errData
   };
 };
+export const logout = () => {
+  return {
+    type: actionTypes.AUTH_LOGOUT
+  }
+};
+
+/* Async action-creator to dispatch logout event */
+export const checkAuthTimeout = (expiringTime) => {
+  return (dispatch) => {
+    setTimeout(() => {
+      dispatch(logout());
+    }, expiringTime * 1000);
+  };
+};
 
 /* Async action-creators which are using 'thunks' package to get the 'dispatch' */
 export const auth = (email, password, isSignUP) => {
@@ -44,11 +58,12 @@ export const auth = (email, password, isSignUP) => {
         console.log(res);
         /* Dispatching the AUTH_SUCCESS action */
         dispatch(authSuccess(res.data));
+        dispatch(checkAuthTimeout(res.data.expiresIn));
       })
       .catch(err => {
         console.log(err);
         /* Dispatching the AUTH_FAIL action */
-        dispatch(authFail(err));
+        dispatch(authFail(err.response.data.error));
       })
   };
 };

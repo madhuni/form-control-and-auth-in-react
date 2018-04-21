@@ -1,17 +1,37 @@
 import React, {Component} from 'react';
+import { Route, Switch, withRouter } from "react-router-dom";
+import { connect } from 'react-redux';
 
 import './app.css';
+import Header from './components/layout/header/header';
+import Auth from './pages/auth/auth';
+import Gallery from './pages/gallery/gallery';
+import Logout from './pages/auth/logout/logout';
+
+import * as actionCreators from './store/actions/action-creators';
 
 class App extends Component {
   render() {
     return (
       <React.Fragment>
         <div className="app">
-          <h1>Welcome to the React Application</h1>
+          <Header isAuthenticated={this.props.isAuthenticated} />
+          <Switch>
+            <Route path="/auth" component={Auth} />
+            <Route path="/logout" component={Logout} />
+            <Route path="/gallery" component={Gallery} />
+            {/* <Route path="/" exact component={} /> */}
+          </Switch>
         </div>
       </React.Fragment>
     );
   }
 }
 
-export default App;
+const mapStateToProps = (state) => {
+  return {
+    isAuthenticated: state.token !== null,
+  }
+};
+
+export default withRouter(connect(mapStateToProps)(App));

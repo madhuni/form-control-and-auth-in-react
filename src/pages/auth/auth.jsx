@@ -1,11 +1,14 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom'
 
 import './auth.css';
 import Input from '../../components/ui/input/input';
 import user from '../../assets/images/user-icon.svg';
 
 import * as actionCreators from '../../store/actions/action-creators';
+import Spinner from '../../components/ui/spinner/spinner';
+import Modal from '../../components/ui/modal/modal';
 
 class Auth extends Component {
   state = {
@@ -46,7 +49,7 @@ class Auth extends Component {
       },
     },
     formValidated: false,
-    isSignUp: true
+    isSignUp: false
   };
 
   checkFormValidity = (value, rules) => {
@@ -121,39 +124,67 @@ class Auth extends Component {
       });
     }
 
+    let errorMsg = null;
+    if (this.props.error) {
+      // errorMsg = <p className="auth-error-msg">This email is already resgistered.<br/>Please try to sign up with a new email.</p>;
+      errorMsg = <p className="auth-error-msg">{this.props.error}</p>;
+    }
+
     return (
-      <div className="auth">
-        <form className="auth-form" onSubmit={this.onSubmitHandler}>
-          <img src={user} alt="User Icon" width="100" height="100" className="user-icon"/>
-          {formElementsArray.map(formElement => (
-            <Input 
-              key={formElement.id}
-              elementType={formElement.config.elementType}
-              elementConfig={formElement.config.elementConfig}
-              value={formElement.config.value}
-              label={formElement.config.label}
-              id={formElement.config.elementConfig.id}
-              changed={(event) => this.onInputChange(event, formElement.id)}
-              isValid={formElement.config.valid}
-              isTouched={formElement.config.touched}
-            />
-          ))}
-          <button type="submit" disabled={!this.state.formValidated} className="btn">
-            {this.state.isSignUp ? 'Sign UP' : 'Sign In'}
-          </button>
-        </form>
-
-        <div className="switch-mode">
-          <p>Already having an account? Click below button to Sign In.</p>
-          <button className="btn btn--switch" onClick={this.onToggleAuthMode}>
-            Switch to {this.state.isSignUp ? 'Sign In' : 'Sign Up'}
-          </button>
-        </div>
-
-      </div>
+      <React.Fragment>
+        {this.props.isAuthenticated ? 
+          <Redirect to="/gallery" /> :
+          <div className="auth">
+            {errorMsg}
+            {!this.props.loading ? 
+              <React.Fragment>
+                <form className="auth-form" onSubmit={this.onSubmitHandler}>
+                  <img src={user} alt="User Icon" width="100" height="100" className="user-icon"/>
+                  {formElementsArray.map(formElement => (
+                    <Input 
+                      key={formElement.id}
+                      elementType={formElement.config.elementType}
+                      elementConfig={formElement.config.elementConfig}
+                      value={formElement.config.value}
+                      label={formElement.config.label}
+                      id={formElement.config.elementConfig.id}
+                      changed={(event) => this.onInputChange(event, formElement.id)}
+                      isValid={formElement.config.valid}
+                      isTouched={formElement.config.touched}
+                    />
+                  ))}
+                  <button type="submit" disabled={!this.state.formValidated} className="btn">
+                    {this.state.isSignUp ? 'Sign UP' : 'Sign In'}
+                  </button>
+                </form>
+                <div className="switch-mode">
+                  <p>Not having an account? Click below button to create one.</p>
+                  <button className="btn btn--switch" onClick={this.onToggleAuthMode}>
+                    Switch to {this.state.isSignUp ? 'Sign In' : 'Sign Up'}
+                  </button>
+                </div>
+              </React.Fragment> :
+              <React.Fragment>
+                <Spinner />
+                <p className="loading-msg">
+                  Please wait while we are {this.state.isSignUp ? 'creating a new account...' : 'signing you in...'}
+                </p>
+              </React.Fragment>
+            }
+          </div>
+        }
+      </React.Fragment>
     );
   }
 }
+
+const mapStateToProps = (state) => {
+  return {
+    isAuthenticated: state.token !== null,
+    error: state.error,
+    loading: state.loading
+  };
+};
 
 const mapDispatchToProps = (dispatch) => {
   return {
@@ -163,4 +194,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(null, mapDispatchToProps)(Auth);
+export default connect(mapStateToProps, mapDispatchToProps)(Auth);

@@ -14,7 +14,10 @@ const nav = (props) => {
           <NavLink to='/gallery'>Gallery</NavLink>
         </li>
         <li className="nav-item">
-          <NavLink to='/auth'>Login</NavLink>
+          {props.isAuthenticated ?
+            <NavLink to='/logout'>Logout</NavLink> :
+            <NavLink to='/auth'>Log In</NavLink>
+          }    
         </li>
       </ul>
     </nav>

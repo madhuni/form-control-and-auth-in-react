@@ -6,7 +6,7 @@ import Nav from '../nav/nav';
 const header = (props) => {
   return (
     <header className="header">
-      <Nav />
+      <Nav {...props}/>
     </header>
   );
 };
