@@ -40,3 +40,25 @@
 .loading-spinner {
   grid-column: 1 / -1;
 }
+
+.add-btn {
+  display: flex;
+  padding: 0;
+  width: 35rem;
+  height: 28rem;
+  margin: 0 auto;
+  justify-content: center;
+  align-items: center;
+  background: #efefef;
+}
+
+.add-btn:hover,
+.add-btn:active {
+  box-shadow: 0 1px 5px 2px #eee;
+}
+
+iframe {
+  width: 100%;
+  height: 31.5rem;
+  border: none;
+}

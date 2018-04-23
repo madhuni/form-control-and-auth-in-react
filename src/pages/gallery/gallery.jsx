@@ -3,12 +3,15 @@ import axios from '../../services/axios';
 import {connect} from 'react-redux';
 
 import './gallery.css';
+import addBtn from '../../assets/images/plus-icon.svg';
 
 import Spinner from '../../components/ui/spinner/spinner';
+import Modal from '../../components/ui/modal/modal';
 
 class Gallery extends Component {
   state = {
-    images: null
+    images: null,
+    showModal: false
   };
   componentDidMount() {
     axios.get('/galleries.json?auth=' + this.props.token)
@@ -22,6 +25,25 @@ class Gallery extends Component {
       .catch(err => {
         console.log(err);
       });
+  }
+
+  showModal = () => {
+    this.setState({
+      ...this.state,
+      showModal: true
+    });
+  }
+  
+  closeModal = () => {
+    this.setState({
+      ...this.state,
+      showModal: false
+    });
+
+    /* A simple method to stop the youtube video when the modal is closed */
+    let iframe = document.querySelector('.player'); // getting the iframe element
+    const iframeSrc = iframe.src; // getting the source of element
+    iframe.src = iframeSrc; // resetting the source of the element
   }
 
   render() {
@@ -41,7 +63,7 @@ class Gallery extends Component {
           <Spinner />
         </div>
       );
-    } else if (this.loading) {
+    } else if (this.props.loading) {
       gallery = (
         <div className="loading-spinner">
           <Spinner />
@@ -63,10 +85,21 @@ class Gallery extends Component {
     }
 
     return (
-      <div className="gallery">
-        <h1 className="section-heading">View your beautiful gallery</h1>
-        {gallery}
-      </div>
+      <React.Fragment>
+        <Modal show={this.state.showModal} clicked={this.closeModal}>
+          <iframe src="https://www.youtube.com/embed/2IMMNRmmwhE?rel=0&amp;showinfo=0?enablejsapi" className="player"></iframe>
+        </Modal>
+        <div className="gallery">
+          <h1 className="section-heading">View your beautiful gallery</h1>
+          {gallery}
+          {this.props.token && images.length !== 0 ? 
+            <div className="gallery-item add-btn" onClick={this.showModal}>
+              <img src={addBtn} alt="Add Item" className="add-btn-img" width="70" height="70"/>
+            </div> :
+            null
+          }
+        </div>
+      </React.Fragment>
     );
   }
 }
