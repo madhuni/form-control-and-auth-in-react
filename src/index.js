@@ -26,7 +26,7 @@ const logger = (store) => { // this function receives 'store' as arguments
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 // adding 'logger' and 'thunk' as the middlewares
-const store = createStore(reducer, composeEnhancers(applyMiddleware(logger, thunk)));
+const store = createStore(reducer, composeEnhancers(applyMiddleware(thunk)));
 
 const destination = document.getElementById('root');
 ReactDom.render(

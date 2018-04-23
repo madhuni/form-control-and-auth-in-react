@@ -9,8 +9,13 @@ import Gallery from './pages/gallery/gallery';
 import Logout from './pages/auth/logout/logout';
 
 import * as actionCreators from './store/actions/action-creators';
+import * as firebase from 'firebase';
 
 class App extends Component {
+  componentWillMount() {
+    this.props.onTryAutoLogin();
+  }
+
   render() {
     return (
       <React.Fragment>
@@ -34,4 +39,12 @@ const mapStateToProps = (state) => {
   }
 };
 
-export default withRouter(connect(mapStateToProps)(App));
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onTryAutoLogin: () => {
+      dispatch(actionCreators.authCheckState());
+    }
+  } 
+};
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));
