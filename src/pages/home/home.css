@@ -1,0 +1,4 @@
+.home {
+  grid-column: col-start 1 / col-end 12;
+  padding: 10rem 0;
+}
