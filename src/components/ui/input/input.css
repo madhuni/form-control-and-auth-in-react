@@ -33,3 +33,40 @@
   font-size: 1.2rem;
   color: red;
 }
+
+.file-input {
+  width: 0.01rem;
+	height: 0.01rem;
+	opacity: 0;
+	overflow: hidden;
+	position: absolute;
+	z-index: -1;
+}
+
+.file-input + label {
+  width: 80%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  border-radius: .2rem;
+  background: #ff6782;
+  font-weight: bold;
+  letter-spacing: .1rem;
+  color: white;
+  transition: all .3s ease;
+}
+
+.upload-icon {
+  margin-right: 1rem;
+}
+
+.file-upload-label:hover {
+  cursor: pointer;
+  background-color: #ff3f61;
+}
+
+.file-input:active .file-upload-label {
+  background-color: #ff3f61; 
+}
